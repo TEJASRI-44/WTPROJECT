@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizontal Frames Website</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('back.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        color: white;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+    .evm {
+        background-color: rgb(4, 19, 61);
+        border-radius: 18px;
+        align-items: center;
+        margin: auto;
+        margin-top: 10px;
+        margin-bottom: 30px;
+        border: 4px solid white;
+    }
+    .frame {
+        display: flex;
+        flex-direction: row;
+        padding: 20px;
+        text-align: center;
+        margin: auto;
+        padding-top: 40px;
+        height: 190px;
+        width: auto;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    p {
+        margin-top: 20px;
+    }
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        font-weight: bold;
+        height: 50px;
+        width: 100px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 55px;
+        transition: background-color 0.3s;
+    }
+    .light {
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        text-decoration: none;
+        margin-top: 55px;
+        margin-right: 15px;
+        padding-right: 15px;
+        background-color: rgb(255, 169, 169);
+    }
+    .button:hover {
+        background-color: #0056b3;
+    }
+    .con {
+        display: flex;
+        flex-direction: column;
+        height: 120px;
+        width: 190px;
+    }
+    .symb {
+        height: 100px;
+        width: 100px;
+        margin-top: 20px;
+        padding: 10px;
+    }
+    header {
+        text-align: center;
+        color: rgb(255, 255, 255);
+        height: 90px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    marquee {
+        color: rgb(253, 30, 0);
+        height: 26px;
+        text-align: center;
+        font-size: 25px;
+        font-weight: bolder;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.7;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    .blink {
+        animation: blink 0.5s infinite;
+    }
+    #beep {
+        visibility: hidden;
+    }
+    .part{
+        width:150px;
+        height:150px;
+    }
+    .loading {
+        display: none;
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    p{
+        color: black;
+        font-size: 20px;
+        background-color: white;
+        text-align: center;
+    }
+    
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1>DIGITAL EVM</h1> 
+</header>
+<form id="voteForm" action="submit.php" method="post" onsubmit="delaySubmission(event)">
+    <marquee>Cast your vote by clicking on the button of your favourite leader</marquee>
+    <div class="container">
+        <div class="evm">
+            <div class="frame">
+                <div class="con">
+                    <img src="18Y.jpg" class="part" alt="Participant Image">
+                    <p>.Kolagatla Veerabhadra Swamy</p>
+                </div>
+                <img class="symb" src="fan.png" alt="Symbol Image">
+                <button type="button" class="light" id="ycp"></button>
+                <button type="submit" class="button" name="variable" value="ycp">YCP</button>
+            </div>
+            <div class="frame">
+                <div class="con">
+                    <img src="18T.jpg" class="part" alt="Participant Image">
+                    <p>Aditi Vijayalaksmi Pusapati</p>
+                </div>
+                <img src="cycle.jpeg" class="symb" alt="Symbol Image">
+                <button type="button" class="light" id="kutami"></button>
+                <button type="submit" class="button" name="variable" value="kutami">KUTAMI</button>
+            </div>
+            <div class="frame">
+                <div class="con">
+                    <img src="18I.jpg" class="part" alt="Participant Image">
+                    <p>Geetha Meesala</p>
+                </div>
+                <img src="others.jpeg" class="symb" alt="Symbol Image">
+                <button type="button" class="light" id="others"></button>
+                <button type="submit" class="button" name="variable" value="others">OTHERS</button>
+            </div>
+        </div>
+    </div>
+    <audio id="beep" src="beep.mp3" preload="auto"></audio>
+    <input type="text" id="const" name="const"  style="visibility:hidden;" value="vizianagaram">
+    <input type="text" id="win" name="won" style="visibility:hidden;" value="">
+</form>
+<footer style="background-color: black;">
+
+</footer>
+<script>
+    function delaySubmission(event) {
+        event.preventDefault();
+        const delay = 3000;
+        const form = event.target;
+
+        // Add event listeners to the buttons
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('click', () => {
+                const val = button.value;
+                const lightButton = document.getElementById(val);
+                lightButton.style.backgroundColor = 'red';
+                lightButton.classList.add('blink');
+
+                // Play beep sound
+                document.getElementById('beep').play();
+
+                // Remove blink class after 1 second
+                setTimeout(() => {
+                    lightButton.classList.remove('blink');
+                }, 1000);
+                document.getElementById('win').value=val;
+                console.log( document.getElementById('win').value);
+                console.log( document.getElementById('const').value);
+
+                setTimeout(()=>{
+                    
+                    form.submit();
+                },delay);
+            });
+        });
+    }
+</script>
+</body>
+</html>

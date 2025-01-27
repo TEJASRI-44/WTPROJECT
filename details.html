@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Frames</title>
+    <style>
+        body {
+            background-color: black;
+            background-image: url('backg.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: scroll;
+        }
+        .frame {
+            float: left;
+            width: 145px;
+            height: 180px;
+            border: 1px solid black;
+            margin: 10px;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden; /* Ensures the image stays within the frame */
+        }
+        .frame button {
+            line-height: 30px; /* Set line-height to match the height of the frame */
+            vertical-align: top;
+            width: 100%; /* Adjusted width for button */
+            height: 50px; /* Adjusted height for button */
+            border-radius: 10px;
+            background-color: lightgreen;
+            color: black;
+            font-weight: bold;
+            box-shadow: 0 0 2px black;
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+        .frame img {
+            width: 100%; /* Make the image fill the frame */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .clear {
+            clear: both;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+        }
+        .frame button:hover {
+            background-color: darkgreen; /* Change background color on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Click on your constituency...</h1>
+    <?php
+    $constituencies = array(
+       "ichhapuram","palasa","tekkali","pathapatnam","srikakulam",
+       "amdalavalasa","etcherla","narasannapeta","vishakapatnamEast","vishakapatnamSouth",
+       "kurupam","paravathipuram","salur","bobbili","paderu",
+       "gajapathinagaram","nellimarla","vizianagaram","srungavarapukota","arakuvalley",
+    );
+    $numFrames = count($constituencies);
+
+    for ($i = 0; $i < $numFrames; $i++) {
+        $g = $i + 1;
+        echo "<div class='frame'>
+                <img src='$g.jpg' alt='Image $i'>
+                <button class='constituency-button' name='variable' value='{$constituencies[$i]}'>{$constituencies[$i]}</button>
+            </div>";
+    }
+    ?>
+    <div class="clear"></div>
+</body>
+<script>
+    const buttons = document.querySelectorAll('.constituency-button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const val = button.value;
+            window.location.href = val + ".html";
+        });
+    });
+</script>
+</html>
+
